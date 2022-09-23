@@ -1,7 +1,6 @@
 package com.richard.agyei
 
 import kotlinx.coroutines.Deferred
-import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -21,15 +20,7 @@ data class User(
     val website: String?,
     val address: Address?,
     val company: Map<String, String>?
-) {
-}
-
-object UserApiFactory {
-
-    fun createUserApi(retrofit: Retrofit): UserApi {
-        return retrofit.create(UserApi::class.java)
-    }
-}
+)
 
 interface UserApi {
 
@@ -38,4 +29,13 @@ interface UserApi {
 
     @GET("/users/{id}")
     fun getByIdAsync(@Path("id") id: Int): Deferred<User>
+
+    @GET("/users/{id}/posts")
+    fun getUserPostsAsync(@Path("id") id: Int): Deferred<List<Post>>
+
+    @GET("/users/{id}/todos")
+    fun getUserTodosAsync(@Path("id") id: Int): Deferred<List<Todo>>
+
+    @GET("/users/{id}/albums")
+    fun getUserAlbumsAsync(@Path("id") id: Int): Deferred<List<Album>>
 }
